@@ -1,0 +1,25 @@
+// Author: Michael Kausch  
+// Date: 2/7/23
+// Class: CMPS 3350 - Professor Gordon Griesel
+
+             Lesson: 8. Parenthesize to avoid ambiguity.
+
+This is a lesson that is very near and dear to me. This lesson emphasizes
+    the need to parenthesize expressions so that the intended order of
+    operation is clear to the reader. Operator precedence is defined in the
+    language, however, some readability of the expressions are hindered.
+    While it may be an excuse, programmers often forget the order of precedence
+    (myself included).
+
+    Additionally, it is also good practice to not only have correct code but
+    to show intent and there's nothing ambiguous about a pair of parens that
+    illustrate the definite order of operations in an expression.
+
+
+example: 
+
+        if ( x * 4 / 2 * 3 > 8 )
+
+              >>   vs.   <<
+
+        if ( ((x*4) / (2 * 3)) > 8 )

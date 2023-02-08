@@ -1,0 +1,12 @@
+
+all: lab2 lab2b
+
+lab2: xylab2.cpp
+	g++ xylab2.cpp libggfonts.a -Wall -olab2 -lX11 -lGL -lGLU -lm 
+
+lab2b: xylab2b.cpp
+	g++ xylab2b.cpp libggfonts.a -Wall -olab2b -lX11 -lGL -lGLU -lm 
+
+clean:
+	rm -f lab2 lab2b
+

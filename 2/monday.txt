@@ -1,0 +1,7 @@
+// Michael Kausch
+
+1. Yes, my personal account is set up on Github.
+
+2. Yes, I was able to successfully push my lab1 to Github.
+
+3. The name of the remote repository that you are pushing your code to.
