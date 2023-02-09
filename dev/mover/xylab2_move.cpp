@@ -419,9 +419,9 @@ void make_particle(int x, int y)
 
 void spawn_cloud(float x, float y, float z)
 {
-    static float _x = particle.pos[0];
-    static float _y = particle.pos[1];
-    static float _z = particle.pos[2];
+    // static float _x = particle.pos[0];
+    // static float _y = particle.pos[1];
+    // static float _z = particle.pos[2];
 
 
     if (g.n < MAX_PARTICLES) {
@@ -485,7 +485,7 @@ void X11_wrapper::check_mouse(XEvent *e)
         if (savex != e->xbutton.x || savey != e->xbutton.y) {
             savex = e->xbutton.x;
             savey = e->xbutton.y;
-            spawn_cloud(e->xbutton.x, e->xbutton.y, 0);
+            // spawn_cloud(e->xbutton.x, e->xbutton.y, 0);
             // make 5 particles when mouse moves
             //for (int i = 0; i < 5; i++) {
             //    make_particle(e->xbutton.x, g.yres - e->xbutton.y);
@@ -608,13 +608,6 @@ void move_all()
             cloud[i].move();
 
         }
-
-
-
-            
-        
-
-
 
     }
 }
@@ -885,7 +878,7 @@ void render()
 
     // if (g.state < 9) {
 
-        for (int i = 0; i < 5; i++) {
+    for (int i = 0; i < 5; i++) {
         // Draw box
         glPushMatrix();
         //glColor3ub(150, 160, 220);
@@ -910,69 +903,53 @@ void render()
         g.r[i].center = 1;
 
         ggprint8b(g.r+i, 16, 0x00ffff00, words[i].c_str());
-
-
-        // if (!box[i].is_ready) {
-        //     g.r[i].bot = box[i].pos[1] - 5;
-        //     g.r[i].left = box[i].pos[0];
-        //     //g.r[i].center = box[i].pos[0];
-
-        //     g.r[i].center = 1;
-
-        //     ggprint8b(g.r+i, 16, 0x00ffff00, words[i].c_str());
-        // }
-
-        }
+    
+    }
 
         //int b = rand() % 50 + 200;
         // Draw particle
 
-        if (g.n == 1) {
+    if (g.n == 1) {
+        glPushMatrix();
+
+        // glColor3ub(150, 160, 220);
+        // particle.fade_color();
+        particle.double_fade();
+        glColor3ubv(particle.color);
+
+        glTranslatef(particle.pos[0], particle.pos[1], 0.0f);
+
+        glBegin(GL_QUADS);
+            glVertex2f(-particle.w, -particle.h);
+            glVertex2f(-particle.w,  particle.h);
+            glVertex2f( particle.w,  particle.h);
+            glVertex2f( particle.w, -particle.h);
+        glEnd();
+        glPopMatrix();
+    } else if (g.n > 1) {
+        
+        for (int i = 1; i < g.n; i++)
+        {
             glPushMatrix();
 
             // glColor3ub(150, 160, 220);
             // particle.fade_color();
-            particle.double_fade();
-            glColor3ubv(particle.color);
+            
+            glColor3ubv(cloud[i].color);
 
-            glTranslatef(particle.pos[0], particle.pos[1], particle.pos[2]);
+            glTranslatef(cloud[i].pos[0], cloud[i].pos[1], 0.0f);
 
             glBegin(GL_QUADS);
-                glVertex2f(-particle.w, -particle.h);
-                glVertex2f(-particle.w,  particle.h);
-                glVertex2f( particle.w,  particle.h);
-                glVertex2f( particle.w, -particle.h);
+                glVertex2f(-cloud[i].w, -cloud[i].h);
+                glVertex2f(-cloud[i].w,  cloud[i].h);
+                glVertex2f( cloud[i].w,  cloud[i].h);
+                glVertex2f( cloud[i].w, -cloud[i].h);
             glEnd();
             glPopMatrix();
-        }
-
-        if (g.n > 1) {
-            
-            for (int i = 1; i < MAX_PARTICLES; i++)
-            {
-                glPushMatrix();
-
-                // glColor3ub(150, 160, 220);
-                // particle.fade_color();
-                
-                glColor3ubv(cloud[i].color);
-
-                glTranslatef(cloud[i].pos[0], cloud[i].pos[1], cloud[i].pos[2]);
-
-                glBegin(GL_QUADS);
-                    glVertex2f(-cloud[i].w, -cloud[i].h);
-                    glVertex2f(-cloud[i].w,  cloud[i].h);
-                    glVertex2f( cloud[i].w,  cloud[i].h);
-                    glVertex2f( cloud[i].w, -cloud[i].h);
-                glEnd();
-                glPopMatrix();
-
-            }
-            
-
-
 
         }
+
+    }
 
 
     }
