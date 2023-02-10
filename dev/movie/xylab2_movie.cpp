@@ -50,9 +50,12 @@ public:
     float w, h;
     float accel[3];
     float vel[3];
+    float p_move_vel[3];
     float key_vel[3];
     float pos[3]; 
     unsigned char color[3];
+    bool set_gravity;
+
     int collision_obj_id;
 
     // setters
@@ -121,18 +124,6 @@ public:
             pos[0] = (obj.pos[0] + obj.w - w);
     }
 
-    void set_accel(float x, float y, float z)
-    {
-        accel[0] = x;
-        accel[1] = y;
-        accel[2] = z;
-    }
-
-    void apply_gravity()
-    {
-        vel[1] -= GRAVITY;
-    }
-
     void set_vel(float x, float y, float z)
     {
         vel[0] = x;
@@ -149,21 +140,39 @@ public:
 
     void stop()
     {
-        set_accel(0,0,0);
         set_vel(0,0,0);
     }
 
     void move()
     {
-        // accelerate
-        vel[0] += accel[0];
-        vel[1] += accel[1];
-        vel[2] += accel[2];
         
         // move
+        if (set_gravity == true) 
+            vel[1] -= GRAVITY;
+            
         pos[0] += vel[0];
         pos[1] += vel[1];
         pos[2] += vel[2];
+    }
+
+    float left_edge()
+    {
+        return (pos[0] - w);
+    }
+    
+    float right_edge()
+    {
+        return (pos[0] + w);
+    }
+
+    float top_edge()
+    {
+        return (pos[1] + h);
+    }
+
+    float bottom_edge()
+    {
+        return (pos[1] - h);
     }
 
     // for behavior, "left" or "right" need to be passed in
@@ -180,11 +189,19 @@ public:
                     ((pos[0] + w) < (obj.pos[0] - obj.w) + 10) );
     }
 
-    bool y_equal(const Box &obj)
+    bool y_equal(Box &obj)
     {
         return (( (pos[1] - h) <= (obj.pos[1] + obj.h) ) &&
             (pos[1] - h) > (obj.pos[1] + obj.h - 10));
     }
+
+    bool on_box(Box &b)
+    {
+        return ( y_equal(b) &&
+                ( left_edge() > b.left_edge() ) &&
+                ( right_edge() < b.right_edge() ) );
+    }
+
 
     string get_info()
     {
@@ -214,8 +231,12 @@ public:
         // is_activated = is_moving = is_reseting = false;
         // is_ready = true;
         set_ready_color();
-        set_accel(0,0,0);
         set_vel(0,0,0);
+        set_gravity = 0;
+        p_move_vel[0] = 0;
+        p_move_vel[1] = 0;
+        p_move_vel[2] = 0;
+
         
         collision_obj_id = 0;
 
@@ -328,7 +349,7 @@ void X11_wrapper::set_title()
 {
     //Set the window title bar.
     XMapWindow(dpy, win);
-    XStoreName(dpy, win, "Mover");
+    XStoreName(dpy, win, "Movie");
 }
 
 bool X11_wrapper::getXPending()
@@ -479,18 +500,26 @@ int X11_wrapper::check_keys(XEvent *e)
                 return 1;
 
             case XK_a:
-                particle.set_vel(-2,0,0);
+                particle.p_move_vel[0] = -3;
 
                 break;
             case XK_d:
-                particle.set_vel(-2,0,0);
+                particle.p_move_vel[0] = 3;
 
 
                 break;
             case XK_space:
+                particle.p_move_vel[1] = 3;
 
                 break;
+            
+            default:
+                particle.stop();
         }
+    }
+
+    if (e->type == KeyRelease) {
+        particle.stop();
     }
 
     return 0;
@@ -559,28 +588,16 @@ void init_opengl(void)
 
 void move_all()
 {
+    for (int i = 0; i < 5; i++) {
+        if (particle.on_box(box[i])) {
+            particle.set_gravity = false;
+            particle.set_vel(box[i].vel[0], box[i].vel[1], box[i].vel[2]);
+
+        }
+    }
     particle.move();
     for (int i = 0; i < 5; i++) {
         box[i].move();
-    }
-    if (g.n > 1) {
-        for (int i = 1; i < g.n; i++)
-        {
-          
-            if (cloud[i].vel[0] > 100) {
-                cloud[i].vel[0] -= 25;
-            } else if (cloud[i].vel[0] < -100) {
-                cloud[i].vel[0] += 25;
-            } 
-
-            if (cloud[i].vel[1] > 100) {
-                cloud[i].vel[1] -= 25;
-            } else if (cloud[i].vel[1] < -100) {
-                cloud[i].vel[1] += 25;
-            } 
-
-            cloud[i].move();
-        }
     }
 }
 
@@ -590,152 +607,69 @@ void physics()
     {
     case 0: // waiting for particle to drop
         
-        
-        
         break;
-        
     case 1: // particle is dropping to box[0]
-        particle.apply_gravity();
-        
+
         if (particle.y_equal(box[0])) {
-                particle.vel[1] = 0;
-                particle.noclip_y(box[0]);
                 box[0].set_vel(2,0,0);
-                particle.set_vel(2,0,0);
                 g.state = 2;
             }
-
         break;
     case 2: // box[0] is moving to box[1]
-        // box[0].move();
-        // particle.move();
-        // move_all();
 
-        // if ( (box[0].pos[0] + box[0].w) >= (box[1].pos[0] - box[1].w) ) {
         if ( box[0].x_equal(box[1], "right") ) {
             // box 0 is touching box 1
             box[0].stop();
-            particle.stop();
-            particle.set_vel(8,6,0);
-            particle.move();
+            box[0].set_gravity = true;
             g.state = 3;
         }
         break;
     case 3: // particle is jumping to box[1] while box[0] falls;
-        box[0].apply_gravity();
-        // box[0].move();
-        particle.apply_gravity();
-        // particle.move();
-        // move_all();
 
-
-        // if (( (particle.pos[1] - particle.h) < (box[1].pos[1] + box[1].h) ) &&
-        //     (particle.pos[1] - particle.h) > (box[1].pos[1] + box[1].h - 10)) {
-        if (particle.y_equal(box[1])){
-                particle.stop();
-                particle.noclip_y(box[1]);
-                cout << "hit box...\n" << particle.get_info();
-                // box[1].move();
-                // particle.move();
+        if (particle.on_box(box[1])) {
+                box[1].set_gravity = true;
                 g.state = 4;
         }
 
         break;
-
     case 4: // particle and box[1] are falling to box[2]
-        // move_all();
-        particle.apply_gravity();
-        box[1].apply_gravity();
-        // particle.move();
-        // box[1].move();
 
-        if (particle.y_equal(box[2])) {
-            particle.stop();
-            // particle.pos[1] = (box[2].pos[1] + box[2].h + particle.h);
-            particle.noclip_y(box[2]);
-            particle.set_vel(-2,0,0);
+        if (particle.on_box(box[2])) {
             box[2].set_vel(-2,0,0);
             g.state = 5;
-
         }
         break;
     case 5: // particle and box[2] are moving to box[3]
-        // box[1].move(); // to keep it falling off screen
-        // box[2].move();
-        // particle.move();
-        // move_all();
 
         if (box[2].x_equal(box[3], "left")) {
             box[2].stop();
-            box[2].move();
-            particle.stop();
-            particle.set_vel(-8,6,0);
-            // particle.move();
-            
+            box[2].set_gravity = true;
             g.state = 6;
         }
-
         break;
     case 6:     // particle is jumping to box[3] while box[2] falls
-        // particle.move();
-        // move_all();
-        particle.apply_gravity();
-        box[2].apply_gravity();
-        // box[2].move();
 
-
-        if (particle.y_equal(box[3]) && 
-                (particle.pos[0] > (box[3].pos[0]-box[3].w) &&
-                particle.pos[0] < (box[3].pos[0]+box[3].w))) {
-            cout << "y's were equal bro" << endl;
-            particle.noclip_y(box[3]);
-            particle.set_vel(2,2,0);
+        if (particle.on_box(box[3])) {
             box[3].set_vel(0,2,0);
             g.state = 7;
         }
         
         break;
     case 7: // particle and box[3] are rising to box[4]'s level
-        // particle.move();
-        // box[3].move();
-        // move_all();
 
-        if ( ((particle.pos[0]+ particle.w) >= (box[3].pos[0] + box[3].w)) &&
-            ((particle.pos[0]+ particle.w) <= (box[3].pos[0] + box[3].w + 10)) ) {
-            particle.vel[0]=0;
-            // particle.stop();
-            particle.noclip_x(box[3], "right");
-        }
         if ( ((box[3].pos[1]) >= (box[4].pos[1])) &&
                 ((box[3].pos[1]) <= (box[4].pos[1] + 10)) ) {
             box[3].stop();
-            // box[3].vel[1]=0;
-            box[3].pos[1] = box[4].pos[1];
-            // particle.stop();
-            
-        }
-            // both are stopped
-        if ((particle.vel[0] < 0.01f) &&
-            (box[3].vel[1] < 0.01f)) {
+            box[3].set_gravity = true;
 
-                particle.set_vel(4,4,0);
-                g.state = 8;
+            g.state = 8;
         }
-        
 
         break;
-
     case 8: // particle jumping to box[4] 
-        // move_all();
-        box[3].apply_gravity();
-        particle.apply_gravity();
-        // box[3].move();
-        // particle.move();
-        if (particle.y_equal(box[4])) {
-            particle.vel[0] = 2;
-            // particle.set_vel(2,0,-0.05);
-            particle.noclip_y(box[4]);
-            // box[4].vel[2] = -0.05;
+
+        if (particle.on_box(box[4])) {
+
             g.state = 9;
         }
         
@@ -744,43 +678,27 @@ void physics()
     
     case 9:
         
-        // if (particle.pos[0] < box[4].pos[0]) {
-        //     particle.vel[0] = 2;
-        // } else {
-        //     particle.vel[0] = -2;
-        // }
-        // spawn_cloud();
-        particle.noclip_y(box[4]);
-        particle.apply_gravity();
-        box[4].apply_gravity();
-        if (((particle.pos[1] + particle.h ) < 0.0f) &&
-            ((box[4].pos[1] + box[4].h) < 0.0f)) {
-            g.state = 10;
+        if (particle.pos[0] < box[4].pos[0]) {
+            particle.vel[0] = 2;
+        } else {
+            particle.vel[0] = -2;
         }
 
         break;
 
     case 10:
-        // spawn_cloud();
-        for (int i = 1; i < g.n; i++) {
-            // accel
-            if (cloud[i].vel[0] > 20) {
-                cloud[i].accel[0] = -1;
-            } else if (cloud[i].vel[0] < -20) {
-                cloud[i].accel[0] = 1;
-            } 
-
-            if (cloud[i].vel[1] > 20) {
-                cloud[i].accel[1] = -1;
-            } else if (cloud[i].vel[1] < -20) {
-                cloud[i].accel[1] += 1;
-            } 
-        }
 
         break;
 
     default:
         break;
+    }
+
+
+
+    if (((particle.pos[1] + particle.h ) < 0.0f) &&
+        ((box[4].pos[1] + box[4].h) < 0.0f)) {
+        g.state = 10;
     }
     
     
@@ -882,71 +800,7 @@ void render()
     }
 
 
-    }
-
-
-
-    // } else if (g.state == 9) {
-
-    //     glPushMatrix();
-    //     //glColor3ub(150, 160, 220);
-    //     glColor3ubv(box[4].color);
-            
-    //     glTranslatef(box[4].pos[0], box[4].pos[1], box[4].pos[2]);
-
-    //     glBegin(GL_QUADS);
-    //         glVertex2f(-box[4].w, -box[4].h);
-    //         glVertex2f(-box[4].w,  box[4].h);
-    //         glVertex2f( box[4].w,  box[4].h);
-    //         glVertex2f( box[4].w, -box[4].h);
-    //     glEnd();
-
-    //     glPopMatrix();
-
-       
-
-    //     glPushMatrix();
-
-    //         // glColor3ub(150, 160, 220);
-    //         // particle.fade_color();
-    //         particle.double_fade();
-    //         glColor3ubv(particle.color);
-
-    //         glTranslatef(particle.pos[0], particle.pos[1], particle.pos[2]);
-
-    //         glBegin(GL_QUADS);
-    //             glVertex2f(-particle.w, -particle.h);
-    //             glVertex2f(-particle.w,  particle.h);
-    //             glVertex2f( particle.w,  particle.h);
-    //             glVertex2f( particle.w, -particle.h);
-    //         glEnd();
-    //         glPopMatrix();
-
-    //     if (particle.w > 0.24) {
-    //         box[4].w *= 0.98;
-    //         box[4].h *= 0.98;
-    //         particle.w *= 0.98;
-    //         particle.h *= 0.98;
-    //     } else  {// if (particle.pos[2] <= -200) 
-    //         g.state = 10;
-    //     }
-    // } else if (g.state == 10) {
-    //     particle.double_fade();
-    //     glColor3ubv(particle.color);
-
-    //     glTranslatef(particle.pos[0], particle.pos[1], 0.0f);
-
-    //     glBegin(GL_QUADS);
-    //         glVertex2f(-particle.w, -particle.h);
-    //         glVertex2f(-particle.w,  particle.h);
-    //         glVertex2f( particle.w,  particle.h);
-    //         glVertex2f( particle.w, -particle.h);
-    //     glEnd();
-    //     glPopMatrix();
-
-    //     particle.w *= 1.2;
-    //     particle.h *= 1.2;
-    // }
+}
 
 // }
 
