@@ -1,3 +1,6 @@
 [submodule "1"]
 	path = 1
 	url = https://github.com/kauschie/lab1
+[submodule "dev/cosmotost"]
+	path = dev/cosmotost
+	url = git@github.com:dantor09/cosmotost.git
