@@ -1,0 +1,11 @@
+apple
+bears
+chairs
+dares
+grizzly
+mammoth
+mike
+morewords
+word1
+word2
+word3
