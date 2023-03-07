@@ -13,15 +13,17 @@
 #include <vector>
 #include <algorithm>
 #include <cstring>
+#include <sys/ioctl.h>
 
 using namespace std;
 
 const char fname[] = "/home/fac/gordon/public_html/3350/dictionary.txt";
 
-bool check_letter (string s, char c);
-bool check_word (string word, string username = "mkausch");
-void sort_letters (string & s);
-void remove_duplicates(vector<string> &v);
+extern bool check_letter (string s, char c);
+extern bool check_word (string word, string username = "mkausch");
+extern void sort_letters (string & s);
+extern void remove_duplicates(vector<string> &v);
+void print_words(vector<string> &v);
 
 int main (int argc, char * argv[])
 {
@@ -32,6 +34,7 @@ int main (int argc, char * argv[])
     string uname = "gzepeda";
     int dict_count = 0;
     int name_count = 0;
+    int to_print = 0;
     vector<string> test = {"mike", "mike"};
 
     vector<string> words;
@@ -40,29 +43,21 @@ int main (int argc, char * argv[])
 
     if (argc > 1)
         uname = argv[1];
+    if (argc > 2)
+        to_print = atoi(argv[2]);
 
     if (!fin) {
         cerr << "ERROR opening file" << endl;
         return 1;
     }
 
-    //cout << "file opened successfully\n";
+    // add words from file to a vector that holds all dict words
 
     while (fin >> s_word) {
         words.push_back(s_word);
     }
 
-    //cout << "There are " << words.size() << " words in the vector.\n";
-
-    /*
-       string word = "maam";
-
-       cout << "maam is in mkausch" << boolalpha << check_word(word, uname) << endl;
-       */
-
-    //    sort_letters(word);
-
-
+    // add all words that have only letters from uname 
     for (auto it2 = words.begin(); it2 != words.end(); it2++) {
         dict_count++;
 
@@ -72,142 +67,69 @@ int main (int argc, char * argv[])
         }
     }
 
-    sort(sorted_words.begin(), sorted_words.end());
-    cout << "there were " << sorted_words.size() << " words in the dict.\n";
-    cout << "sorted words are: " << endl;
 
-    for (auto it2 = sorted_words.begin(); it2 != sorted_words.end(); it2++) {
-            cout << *it2 << " ";
+    sort(sorted_words.begin(), sorted_words.end());
+    cout << "there were " << sorted_words.size() << " words with " << uname  
+            << " in it.\n";
+
+    if (to_print) {
+        cout << "\nsorted words are: " << endl;
+        // print sorted words
+        // for (auto it2 = sorted_words.begin(); it2 != sorted_words.end(); it2++) {
+        //         cout << *it2 << " ";
+        // }
+        print_words(sorted_words);
+
     }
 
     cout << endl << endl;
 
 
+    // sort letters of each word
     for (auto it2 = sorted_words.begin(); it2 != sorted_words.end(); it2++) {
         sort_letters(*it2);
     }
     
+    // sort vector of words that are sorted by letter
     sort(sorted_words.begin(), sorted_words.end());
-
-    remove_duplicates(sorted_words);
-
-    /*
-    cout << "sorted words with sorted letters without duplicates are: " << endl;
-    for (auto it2 = sorted_words.begin(); it2 != sorted_words.end(); it2++) {
-        sort_letters(*it2);
-        cout << *it2 << " ";
-        fout << *it2 << endl;
-    }
-    */
-
-    remove_duplicates(sorted_words);
-
-    /*
-    for (auto it2 = sorted_words.begin(); it2 != sorted_words.end(); it2++) {
-        cout << *it2 << endl;
-    }
-    */
-    
-    sort( sorted_words.begin(), sorted_words.end() );
     sorted_words.erase( unique( sorted_words.begin(), sorted_words.end() ), sorted_words.end() );
 
-    for (auto it2 = sorted_words.begin(); it2 != sorted_words.end(); it2++) {
-        cout << *it2 << " ";
+    cout << "there were " << sorted_words.size() << " words sorted by " <<
+            " letters that were unique with " << uname << " in it.\n";
+    
+    if (to_print) {
+        cout << "The word were...\n\n";
+        print_words(sorted_words);
+        // for (auto it2 = sorted_words.begin(); it2 != sorted_words.end(); it2++) {
+        //     cout << *it2 << " ";
+        //     fout << *it2 << endl;
+        // }
     }
 
     cout << "\n\ndict_sorted has been written..." << endl;
-
-    //cout << "there were " << words.size() << " words in the dict.\n";
-    cout << "there were " << sorted_words.size() << " words with " << uname  
-        << " in it.\n";
-
-    
-
-
     fin.close();
     fout.close();
 
     return 0;
 }
 
-bool check_letter (string s, char c)
+void print_words(vector<string> &v)
 {
-    bool result = false;
-    for (size_t i = 0; i < s.length(); i++) {
-        if (s[i] == c) {
-            result = true;
-            break;
+    struct winsize w;
+    ioctl(0, TIOCGWINSZ, &w);
+    int letter_count = 0;
+    for (auto it = v.begin(); it != v.end(); it++) {
+        // cout << "letter_count: " << letter_count << endl;
+        // cout << "size of next word: " << (*it).size() << endl;
+        // cout << "w.ws_col: " << w.ws_col << endl;
+        // cin.get();
+        if ((letter_count + (*it).size()) + 1 <= w.ws_col) {
+            cout << *it << " ";
+            letter_count += (*it).size() + 1;
         }
-    }
-
-    return result;
-}
-
-bool check_word (string word, string username)
-{
-    bool result = true;
-    bool is_found = true;
-
-    for (size_t i = 0; i < word.length(); i++) {
-        is_found = check_letter(username, word[i]);
-        if (!is_found) {
-            result = false;
-            break;
-        }
-    }
-
-    return result;
-}
-
-void sort_letters (string & s)
-{
-    int n = s.length();
-    //char * cstr = s.c_str();    
-    char tmp;
-    /*
-       cout << "starting out with " << s << endl;
-       cout << s << " is now ";
-       */
-
-    for (int i = 0; i < n-1; i++) {
-        for (int j = 0; j < n-1; j++) {
-            if (s[j] > s[j+1]) {
-                // swap
-                tmp = s[j];
-                s[j] = s[j+1];
-                s[j+1] = tmp;
-                //strcpy(tmp, s[j]);
-                //strcpy(s[j], s[j+1]);
-                //strcpy(s[j+1], tmp);
-            }
-        }
-    }
-
-    /*
-       cout << s << endl;
-       */
-
-}
-
-
-bool is_duplicate(string s1, string s2)
-{
-    return (s1 == s2);
-}
-
-void remove_duplicates(vector<string> &v)
-{
-    size_t size = v.size();
-    for (size_t i = 0; i < size; i++) {
-       // cout << "looking at " << v[i] << " and " << v[i+1] << endl;
-        //if ( v[i] == "aeln" )
-            //cin.get();
-
-        if (v[i] == v[i+1]) {
-           // cout << "found duplicate and removing " << v[i] << endl;
-            auto it = v.begin() + i;
-            v.erase(it);
-            size = v.size();
+        else {
+            cout << endl << *it << " ";
+            letter_count = (*it).size() + 1;
         }
     }
 }
