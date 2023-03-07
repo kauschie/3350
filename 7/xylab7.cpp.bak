@@ -1,10 +1,8 @@
-/* 
- * Name: Michael Kausch
- * Assignment: xylab6c
- * Class: CMPS 3350
- * Professor: Gordon
- * Date: 4/28/23
- */
+ // Name: Michael Kausch
+ // Assignment: xylab7
+ // Class: CMPS 3350
+ // Professor: Gordon
+ // Date: 3/7/23
 
 #include <iostream>
 #include <fstream>
@@ -27,6 +25,8 @@ int main(int argc, char * argv[])
         output = 1;
         sort = 1;
     }
+
+    vector<string> words;
 
     ifstream fin(fname);
     ofstream fout("dict_sorted.txt");

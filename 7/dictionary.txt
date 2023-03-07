@@ -1,4 +1,3 @@
-zygote
 a
 aba
 ababa

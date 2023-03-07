@@ -15,7 +15,7 @@ int run_times = 0;
 #endif
 
 
-int main(int argc, char * argv[])
+int main (int argc, char * argv[])
 {
 
     int n = 5;
