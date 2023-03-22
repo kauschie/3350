@@ -1,3 +1,13 @@
+// Modified by: Michael Kausch
+// Modified On: 3/22/23
+// Lab 9 continuation 
+// image.cpp - implementation of the Image class
+
+
+//Original author:  Gordon Griesel
+//Original date:    2014 - 2021
+
+
 #include "image.h"
 
 Image::~Image() 
