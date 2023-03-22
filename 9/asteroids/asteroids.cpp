@@ -26,6 +26,7 @@
 #include <GL/glx.h>
 #include "log.h"
 #include "fonts.h"
+#include "image.h"
 
 //defined types
 typedef float Flt;
@@ -65,9 +66,9 @@ extern void timeCopy(struct timespec *dest, struct timespec *source);
 void swap_colors(float * nums);
 void print_colors(float * nums);
 
-#include "image.h"
 
-Image img("craters.jpg"), bkg("galaxy.jpg");
+
+Image img1("craters.jpg"), img2("craters2.jpg"), img3("craters3.jpg"), bkg("galaxy.jpg");
 
 class Global {
     public:
@@ -79,6 +80,8 @@ class Global {
 	    memset(keys, 0, 65536);
 	}
 	GLuint texture;
+	GLuint texture2;
+	GLuint texture3;
 	GLuint bkg_texture;
 
 } gl;
@@ -387,15 +390,33 @@ void init_opengl(void)
     initialize_fonts();
 
     glGenTextures(1, &gl.texture);
+	glGenTextures(1, &gl.texture2);
+	glGenTextures(1, &gl.texture3);
     glGenTextures(1, &gl.bkg_texture);
 
-    int w = img.width;
-    int h = img.height;
+    int w = img1.width;
+    int h = img1.height;
     glBindTexture(GL_TEXTURE_2D, gl.texture);
     glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_NEAREST);
     glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_NEAREST);
     glTexImage2D(GL_TEXTURE_2D, 0, 3, w, h, 0,
-	    GL_RGB, GL_UNSIGNED_BYTE, img.data);
+	    GL_RGB, GL_UNSIGNED_BYTE, img1.data);
+
+	w = img2.width;
+    h = img2.height;
+    glBindTexture(GL_TEXTURE_2D, gl.texture2);
+    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_NEAREST);
+    glTexImage2D(GL_TEXTURE_2D, 0, 3, w, h, 0,
+	    GL_RGB, GL_UNSIGNED_BYTE, img2.data);
+
+	w = img3.width;
+    h = img3.height;
+    glBindTexture(GL_TEXTURE_2D, gl.texture3);
+    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_NEAREST);
+    glTexImage2D(GL_TEXTURE_2D, 0, 3, w, h, 0,
+	    GL_RGB, GL_UNSIGNED_BYTE, img3.data);
 
     w = bkg.width;
     h = bkg.height;
@@ -1002,4 +1023,9 @@ void print_colors(float * nums)
 		std::cout << nums[i] << " ";
 	}
 	std::cout << std::endl;
+}
+
+void select_texture(Image * ptr)
+{
+	static int num = 0;
 }
