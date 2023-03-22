@@ -1,4 +1,4 @@
-#include "image_class.h"
+#include "image.h"
 
 Image::~Image() 
 { 
