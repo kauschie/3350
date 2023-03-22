@@ -19,9 +19,9 @@
 #include <ctime>
 #include <cmath>
 #include <X11/Xlib.h>
-//#include <X11/Xutil.h>
-//#include <GL/gl.h>
-//#include <GL/glu.h>
+#include <X11/Xutil.h>
+#include <GL/gl.h>
+#include <GL/glu.h>
 #include <X11/keysym.h>
 #include <GL/glx.h>
 #include "log.h"
@@ -65,10 +65,10 @@ extern void timeCopy(struct timespec *dest, struct timespec *source);
 
 void swap_colors(float * nums);
 void print_colors(float * nums);
+GLuint * select_texture();
 
 
-
-Image img1("craters.jpg"), img2("craters2.jpg"), img3("craters3.jpg"), bkg("galaxy.jpg");
+Image img1("craters.jpg"), img2("craters2.jpg"), img3("craters3.jpg"),  img4("craters4.jpg"), bkg("galaxy.jpg");
 
 class Global {
     public:
@@ -82,7 +82,9 @@ class Global {
 	GLuint texture;
 	GLuint texture2;
 	GLuint texture3;
+	GLuint texture4;
 	GLuint bkg_texture;
+	GLuint * tex_ptr;
 
 } gl;
 
@@ -130,6 +132,7 @@ class Asteroid {
 	float color[3];
 	struct Asteroid *prev;
 	struct Asteroid *next;
+	GLuint * tex;
     public:
 	Asteroid() {
 	    prev = NULL;
@@ -169,7 +172,7 @@ class Game {
 		    a->tcoord[i][1] = (cos(angle) / 2.0 + 0.5) ; 
 		    angle += inc;
 		}
-
+		a->tex = select_texture();
 		a->pos[0] = (Flt)(rand() % gl.xres);
 		a->pos[1] = (Flt)(rand() % gl.yres);
 		a->pos[2] = 0.0f;
@@ -418,6 +421,16 @@ void init_opengl(void)
     glTexImage2D(GL_TEXTURE_2D, 0, 3, w, h, 0,
 	    GL_RGB, GL_UNSIGNED_BYTE, img3.data);
 
+
+	w = img4.width;
+    h = img4.height;
+    glBindTexture(GL_TEXTURE_2D, gl.texture4);
+    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_NEAREST);
+    glTexImage2D(GL_TEXTURE_2D, 0, 3, w, h, 0,
+	    GL_RGB, GL_UNSIGNED_BYTE, img4.data);
+
+
     w = bkg.width;
     h = bkg.height;
     glBindTexture(GL_TEXTURE_2D, gl.bkg_texture);
@@ -631,6 +644,7 @@ void buildAsteroidFragment(Asteroid *ta, Asteroid *a)
     ta->color[2] = 0.7;
     ta->vel[0] = a->vel[0] + (rnd()*2.0-1.0);
     ta->vel[1] = a->vel[1] + (rnd()*2.0-1.0);
+	ta->tex = a->tex;
     //std::cout << "frag" << std::endl;
 }
 
@@ -936,7 +950,8 @@ void render()
 	    glTranslatef(a->pos[0], a->pos[1], a->pos[2]);
 	    glRotatef(a->angle, 0.0f, 0.0f, 1.0f);
 
-	    glBindTexture(GL_TEXTURE_2D, gl.texture);
+	    // glBindTexture(GL_TEXTURE_2D, gl.texture);
+		glBindTexture(GL_TEXTURE_2D, *(a->tex));
 	    glBegin(GL_TRIANGLE_FAN);
 	    Log("%i verts\n",a->nverts);
 	    for (int j=0; j<a->nverts; j++) {
@@ -1025,7 +1040,39 @@ void print_colors(float * nums)
 	std::cout << std::endl;
 }
 
-void select_texture(Image * ptr)
+GLuint * select_texture()
 {
+	GLuint * texptr = nullptr;
+
 	static int num = 0;
+
+	switch (num) {
+		case 0:
+			texptr = &gl.texture2;
+			num++;
+			// std::cerr << "assigning tex2" << std::endl;
+			break;
+		case 1:
+			texptr = &gl.texture3;
+			num++;
+			// std::cerr << "assigning tex3" << std::endl;
+			break;
+		case 2:
+			texptr = &gl.texture4;
+			num = 3;
+			// std::cerr << "assigning tex4" << std::endl;
+			break;
+		case 3:
+			texptr = &gl.texture;
+			num = 0;
+			// std::cerr << "assigning tex1" << std::endl;
+			break;
+		default:
+			texptr = &gl.texture;
+			std::cerr << "default tex1 assignment for some reason...\n";
+			break;
+	}
+	
+
+	return texptr;
 }
