@@ -3,6 +3,7 @@
  //# Class: CMPS 3350
  //# Professor: Gordon
  //# Date: 3/7/23
+ // external functions used for sorting and searching in xylab7 assignment
  
 
 #include <algorithm>
@@ -41,12 +42,7 @@ bool check_word (string word, string username)
 void sort_letters (string & s)
 {
     int n = s.length();
-    //char * cstr = s.c_str();    
     char tmp;
-    /*
-       cout << "starting out with " << s << endl;
-       cout << s << " is now ";
-       */
 
     for (int i = 0; i < n-1; i++) {
         for (int j = 0; j < n-1; j++) {
@@ -55,16 +51,10 @@ void sort_letters (string & s)
                 tmp = s[j];
                 s[j] = s[j+1];
                 s[j+1] = tmp;
-                //strcpy(tmp, s[j]);
-                //strcpy(s[j], s[j+1]);
-                //strcpy(s[j+1], tmp);
             }
         }
     }
 
-    /*
-       cout << s << endl;
-       */
 
 }
 

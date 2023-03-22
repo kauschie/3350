@@ -31,7 +31,7 @@ int main (int argc, char * argv[])
     ifstream fin(fname);
     ofstream fout("dict_sorted.txt");
     string s_word;
-    string uname = "gzepeda";
+    string uname = "mkausch";
     int dict_count = 0;
     int name_count = 0;
     int to_print = 0;
@@ -45,7 +45,6 @@ int main (int argc, char * argv[])
         uname = argv[1];
     if (argc > 2)
         to_print = atoi(argv[2]);
-
     if (!fin) {
         cerr << "ERROR opening file" << endl;
         return 1;
@@ -74,10 +73,6 @@ int main (int argc, char * argv[])
 
     if (to_print) {
         cout << "\nsorted words are: " << endl;
-        // print sorted words
-        // for (auto it2 = sorted_words.begin(); it2 != sorted_words.end(); it2++) {
-        //         cout << *it2 << " ";
-        // }
         print_words(sorted_words);
 
     }
@@ -92,7 +87,9 @@ int main (int argc, char * argv[])
     
     // sort vector of words that are sorted by letter
     sort(sorted_words.begin(), sorted_words.end());
-    sorted_words.erase( unique( sorted_words.begin(), sorted_words.end() ), sorted_words.end() );
+    sorted_words.erase( unique( sorted_words.begin(), 
+                                sorted_words.end() ), 
+                                    sorted_words.end() );
 
     cout << "there were " << sorted_words.size() << " words sorted by " <<
             " letters that were unique with " << uname << " in it.\n";
@@ -100,10 +97,6 @@ int main (int argc, char * argv[])
     if (to_print) {
         cout << "The word were...\n\n";
         print_words(sorted_words);
-        // for (auto it2 = sorted_words.begin(); it2 != sorted_words.end(); it2++) {
-        //     cout << *it2 << " ";
-        //     fout << *it2 << endl;
-        // }
     }
 
     cout << "\n\ndict_sorted has been written..." << endl;
@@ -119,10 +112,6 @@ void print_words(vector<string> &v)
     ioctl(0, TIOCGWINSZ, &w);
     int letter_count = 0;
     for (auto it = v.begin(); it != v.end(); it++) {
-        // cout << "letter_count: " << letter_count << endl;
-        // cout << "size of next word: " << (*it).size() << endl;
-        // cout << "w.ws_col: " << w.ws_col << endl;
-        // cin.get();
         if ((letter_count + (*it).size()) + 1 <= w.ws_col) {
             cout << *it << " ";
             letter_count += (*it).size() + 1;
