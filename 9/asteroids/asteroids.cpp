@@ -1002,7 +1002,7 @@ void render()
 	// gr_delta = (gr[0] >= gr_high || gr[0] <= gr_low) ? gr_delta*(-1) : gr_delta;
 	// bl_delta = (bl[0] >= bl_high || bl[0] <= bl_low) ? bl_delta*(-1) : bl_delta;
 
-	if (count > 4) {
+	if (count > 5) {
 		swap_colors(gr);
 		swap_colors(bl);
 		count = 0;
