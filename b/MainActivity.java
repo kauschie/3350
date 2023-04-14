@@ -3,7 +3,7 @@
 // Software Engineering CMPS 3350
 // Date: 4/11/23
 
-package com.example.mkausch;
+package com.example.myapplication;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
@@ -26,9 +26,13 @@ public class MainActivity extends AppCompatActivity {
     public static int endX=0;
     public static int endY=0;
 
+
+
 //    public bool changed=false;
 
     DisplayMetrics displayMetrics;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,11 +73,21 @@ public class MainActivity extends AppCompatActivity {
                 int newX = (int) event.getX();
                 int newY = (int) event.getY();
 
+                displayMetrics = getResources().getDisplayMetrics();
+                int height = displayMetrics.heightPixels;
+
                 if ((newX - startX) > 200 || (newX - startX) < -200) {
                     startX = newX;
                     startY = newY;
 //                    Toast.makeText(this, "Changed X by too much, newX "+"X: "+endX+" newY: "+endY, Toast.LENGTH_SHORT).show();
                 }
+
+                int delta = (newY - startY);
+
+                if ((newY - startY) > (height/2.0)) {
+                    System.exit(0);
+                }
+
 
                 break;
 
@@ -84,17 +98,16 @@ public class MainActivity extends AppCompatActivity {
 //                Toast.makeText(this, "ACTION_UP "+"X: "+endX+" Y: "+endY, Toast.LENGTH_SHORT).show();
 //                Toast.makeText(this, "ACTION_UP originally AT COORDS "+"X: "+startX+" Y: "+startY, Toast.LENGTH_SHORT).show();
 
-                displayMetrics = getResources().getDisplayMetrics();
-                int height = displayMetrics.heightPixels;
-                int delta = (endY - startY);
+
+//                int delta = (endY - startY);
 
 //                Toast.makeText(this, "Half-Height is " + (height/2), Toast.LENGTH_SHORT).show();
 //                Toast.makeText(this, "Difference is " + delta, Toast.LENGTH_SHORT).show();
 
-                if ((endY - startY) > (height/2.0)) {
-//                    Toast.makeText(this, "Swipe was greater than half screen", Toast.LENGTH_SHORT).show();
-                    System.exit(0);
-                }
+//                if ((endY - startY) > (height/2.0)) {
+////                    Toast.makeText(this, "Swipe was greater than half screen", Toast.LENGTH_SHORT).show();
+//                    System.exit(0);
+//                }
 
                 break;
         }
