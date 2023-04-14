@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
                 displayMetrics = getResources().getDisplayMetrics();
                 int height = displayMetrics.heightPixels;
 
-                if ((newX - startX) > 200 || (newX - startX) < -200) {
+                if ((newX - startX) > 150 || (newX - startX) < -150) {
                     startX = newX;
                     startY = newY;
 //                    Toast.makeText(this, "Changed X by too much, newX "+"X: "+endX+" newY: "+endY, Toast.LENGTH_SHORT).show();
