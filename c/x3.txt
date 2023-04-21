@@ -1,0 +1,48 @@
+albert           pts/33   tmux(3651065).%1 20Mar23 29days  0.02s  0.02s /bin/bash
+aparriott        pts/43   136.168.54.173   09:15    4.00s  0.05s  0.05s -bash
+azurita          pts/12   136.168.201.2    08:56   24:03   0.07s  0.03s vi rtrim.s
+azurita          pts/39   136.168.201.2    09:11   21:38   0.02s  0.02s -bash
+bascencio        pts/24   136.168.201.2    09:02   15:44   0.08s  0.08s -bash
+bascencio        pts/34   136.168.201.2    09:06   13:57   0.05s  0.05s -bash
+bstitt           pts/41   136.168.91.131   09:25   10:05   0.01s  0.01s /bin/bash
+cviramontes      pts/26   136.168.201.2    09:04   46.00s  0.07s  0.07s -bash
+drivera          pts/2    136.168.80.48    08:55   15:28   0.05s  0.05s -bash
+earroyo          pts/27   136.168.201.2    09:04   30:48   0.02s  0.02s -bash
+gjimenez4        pts/28   136.168.201.2    09:04    0.00s  0.90s  0.45s vi lab11.html
+gordon           pts/4    136.168.201.2    08:01   24.00s  0.60s  0.49s vi xylab12.cpp
+gtorres          pts/3    136.168.201.2    08:55   30:16   0.04s  0.04s -bash
+gtorres          pts/31   136.168.53.210   09:34    0.00s  0.02s  0.02s /bin/bash
+hpascual         pts/11   136.168.201.2    08:56    8.00s  0.30s  0.15s vi xylab12.cpp
+hzhang           pts/37   136.168.53.61    09:08   26:40   0.04s  0.04s -bash
+isamara          pts/16   136.168.201.2    08:59   16.00s  0.63s  0.58s vim xylab12.cpp
+isamara          pts/20   136.168.201.2    09:02    8.00s  0.10s  0.10s -bash
+jgarcia2         pts/19   136.168.201.2    09:02    2:08   2.76s  2.72s vi xylab12.cpp
+jgarcia2         pts/38   136.168.201.2    09:16   13:52   0.04s  0.04s -bash
+jzamora2         pts/23   136.168.57.190   09:02    8.00s  0.06s  0.06s -bash
+lgamboa          pts/25   136.168.51.94    09:03    4:22   1.04s  1.00s vi lab11.html
+lgamboa          pts/42   136.168.51.94    09:17    0.00s  0.53s  0.51s vi cpy.cpp
+melissa          pts/29   136.168.201.147  02Feb23 74days  9:29   9:29  alpine
+mjackson         pts/48   136.168.52.94    09:30   38.00s  0.13s  0.10s vim script.js
+mkausch          pts/40   136.168.53.3     09:14    0.00s  0.04s  0.00s ./lab12
+nflessati        pts/6    136.168.201.2    08:55   32.00s  0.60s  0.56s vi xylab12.cpp
+nflessati        pts/9    136.168.201.2    08:55    8:30   0.05s  0.05s -bash
+nnguyen          pts/49   136.168.80.168   09:30    7.00s  0.84s  0.82s npm init              
+ocastillo        pts/13   136.168.201.2    08:56    0.00s  0.79s  0.54s vi xylab12.cpp
+paul             pts/0    136.168.39.179   07:45   34:40   0.05s  0.05s -bash
+pluhar           pts/35   136.168.80.189   09:07   20:40  20:33  20:33  ./a.out
+ptakkar          pts/17   136.168.51.54    09:01   28:52   0.57s  0.53s vi xylab12.cpp
+rgordon          pts/44   136.168.95.224   09:34   40.00s  0.03s  0.03s -bash
+rgrewal          pts/5    136.168.201.2    08:52   38:08   0.04s  0.04s -bash
+rvelasco         pts/14   136.168.201.2    08:59    1:35   0.23s  0.19s vim xylab12.cpp
+sarboleda        pts/32   136.168.201.2    09:06    2:08   1.54s  1.47s vi asteroids.cpp
+sarboleda        pts/47   136.168.57.154   09:34    0.00s  0.04s  0.04s -bash
+sesquivel        pts/46   136.168.51.171   09:25    8.00s  0.25s  0.23s vi notesSoftwareTesting.txt
+steve            pts/1    tmux(1954560).%1 10Apr23 17:38m  1:26   1:26  alpine
+steve            pts/15   136.168.201.152  11Apr23 46:23m  0.12s  0.02s sshd: steve [priv]  
+steve            pts/21   136.168.201.152  10Apr23 17:38m  0.03s  0.00s tmux -u -2 -f /usr/share/byobu/profiles/tmuxrc new-session -n - /usr/bin/byobu-shell
+steve            pts/7    136.168.201.152  11Apr23 17:51m  0.28s  0.01s sshd: steve [priv]  
+steve            tty1     -                05Nov22 134days  0.11s  0.02s -bash
+vto              pts/45   136.168.92.46    09:17   11:03   0.04s  0.04s -bash
+xreyes           pts/30   136.168.201.2    09:08    3.00s  0.06s  0.06s -bash
+zgarcia          pts/10   136.168.201.2    08:55    1:59   4.13s  4.09s vi xylab12.cpp
+zgarcia          pts/36   136.168.201.2    09:16    1:51   0.05s  0.05s -bash

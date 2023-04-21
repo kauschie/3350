@@ -1,0 +1,9 @@
+albert           pts/33   tmux(3651065).%1 20Mar23 29days  0.02s  0.02s /bin/bash
+aparriott        pts/43   136.168.54.173   09:15    4.00s  0.05s  0.05s -bash
+azurita          pts/12   136.168.201.2    08:56   24:03   0.07s  0.03s vi rtrim.s
+earroyo          pts/27   136.168.201.2    09:04   30:48   0.02s  0.02s -bash
+mkausch          pts/40   136.168.53.3     09:14    0.00s  0.04s  0.00s ./lab12
+rgordon          pts/44   136.168.95.224   09:34   40.00s  0.03s  0.03s -bash
+sesquivel        pts/46   136.168.51.171   09:25    8.00s  0.25s  0.23s vi notesSoftwareTesting.txt
+steve            tty1     -                05Nov22 134days  0.11s  0.02s -bash
+zgarcia          pts/36   136.168.201.2    09:16    1:51   0.05s  0.05s -bash

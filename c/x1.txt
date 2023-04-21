@@ -1,0 +1,7 @@
+albert           pts/33   tmux(3651065).%1 20Mar23 29days  0.02s  0.02s /bin/bash
+aparriott        pts/43   136.168.54.173   09:15    4.00s  0.05s  0.05s -bash
+azurita          pts/12   136.168.201.2    08:56   24:03   0.07s  0.03s vi rtrim.s
+azurita          pts/39   136.168.201.2    09:11   21:38   0.02s  0.02s -bash
+bascencio        pts/24   136.168.201.2    09:02   15:44   0.08s  0.08s -bash
+bascencio        pts/34   136.168.201.2    09:06   13:57   0.05s  0.05s -bash
+bstitt           pts/41   136.168.91.131   09:25   10:05   0.01s  0.01s /bin/bash

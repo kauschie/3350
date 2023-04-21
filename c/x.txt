@@ -1,0 +1,50 @@
+acardenassil     pts/13   108.226.199.32   Thu19    6:26m  0.09s  0.07s ssh alonso@calculon.cs.csubak.edu
+acardenassil     pts/16   108.226.199.32   Thu19    6:26m  0.03s  0.01s ssh alonso@calculon.cs.csubak.edu
+acardenassil     pts/3    108.226.199.32   23:40    6:26m  0.04s  0.01s ssh alonso@calculon.cs.csubak.edu
+acardenassil     pts/31   108.226.199.32   Thu19    6:26m  0.04s  0.01s ssh alonso@calculon.cs.csubak.edu
+acardenassil     pts/37   108.226.199.32   Thu19    6:26m  0.26s  0.24s ssh alonso@calculon.cs.csubak.edu
+albert           pts/33   tmux(3651065).%1 20Mar23 31days  0.02s  0.02s /bin/bash
+aparriott        pts/44   136.168.85.20    09:10    0.00s  0.04s  0.04s -bash
+aynostroza       pts/23   136.168.201.2    09:01    0.00s  0.32s  0.23s vi test.cpp
+aynostroza       pts/56   136.168.201.2    09:26    0.00s  0.10s  0.06s vi output.txt
+bascencio        pts/53   16.98.98.127     09:19    9:29   0.02s  0.02s -bash
+drivera          pts/14   136.168.89.42    09:00   15.00s  0.25s  0.20s vi xylab12.cpp
+dtorres          pts/11   136.168.201.2    08:59    4.00s  0.45s  0.23s vim xylab12.cpp
+earroyo          pts/41   136.168.201.2    09:03    3:41   0.02s  0.02s -bash
+gjimenez4        pts/50   136.168.201.2    09:11    8.00s  3.03s  3.00s vi lab11.html
+gordon           pts/43   136.168.201.2    09:07    3:47   0.04s  0.04s -bash
+gordon           pts/47   136.168.201.2    09:10   12:18   0.03s  0.03s -bash
+gtorres          pts/32   136.168.53.95    09:01    4:40   0.02s  0.02s /bin/bash
+hpascual         pts/5    136.168.201.2    08:56    1:44   0.06s  0.06s -bash
+hzhang           pts/51   136.168.81.46    09:12    8.00s  0.72s  0.66s vi xylab12.cpp
+isamara          pts/12   136.168.201.2    08:59   24.00s  0.55s  0.33s vim xylab12.cpp
+isamara          pts/54   136.168.201.2    09:24    3:53   0.01s  0.01s -bash
+isamara          pts/55   136.168.201.2    09:24    3:36   0.02s  0.02s -bash
+jalora           pts/0    70.255.128.244   21:56   10:57m  0.13s  0.11s vi calc.s
+jgarcia2         pts/20   136.168.201.2    09:01   60.00s  0.74s  0.69s vi xylab12.cpp
+jgarcia2         pts/38   136.168.201.2    09:02    2:16   0.05s  0.05s -bash
+jzamora2         pts/28   136.168.86.96    09:01    1:36   0.05s  0.05s -bash
+lgamboa          pts/10   136.168.60.131   09:01   16.00s  0.29s  0.25s vi xylab12.cpp
+mangeles         pts/49   136.168.201.2    09:10   14.00s  0.05s  0.05s -bash
+mangeles         pts/9    136.168.201.2    08:56   16.00s  2.83s  2.81s vi xylab12.cpp
+mdeguia          pts/34   136.168.51.75    09:01   17:12   0.78s  0.75s vi lab8.asm
+mdeguia          pts/35   136.168.51.75    09:01   15.00s  1.01s  0.97s vi inout.asm
+melissa          pts/29   136.168.201.147  02Feb23 76days  9:44   9:44  alpine
+mkausch          pts/46   136.168.49.209   09:10   18:24   0.01s  0.01s /bin/bash
+mkausch          pts/48   136.168.49.209   09:10    0.00s  0.06s  0.02s w -h
+msarr            pts/19   174.46.226.5     Thu15   18:22m  0.06s  0.06s -bash
+nflessati        pts/39   136.168.201.2    09:02    9.00s  0.25s  0.18s vi xylab12.cpp
+nflessati        pts/40   136.168.201.2    09:02   16.00s  0.10s  0.04s vi lab11.html
+ocastillo        pts/17   136.168.201.2    09:00   24.00s  0.86s  0.50s vi xylab12.cpp
+sarboleda        pts/24   136.168.201.2    09:01   48.00s  2.00s  1.95s vi xylab12.cpp
+sarboleda        pts/45   136.168.201.2    09:08   55.00s  0.06s  0.06s -bash
+sesquivel        pts/26   136.168.82.37    09:01   16.00s  0.11s  0.06s vi xylab12.cpp
+steve            pts/1    tmux(1954560).%1 10Apr23 16:26m  2:01   2:01  alpine
+steve            pts/15   136.168.201.152  11Apr23  3days  0.12s  0.02s sshd: steve [priv]  
+steve            pts/21   136.168.201.152  10Apr23 16:26m  0.03s  0.00s tmux -u -2 -f /usr/share/byobu/profiles/tmuxrc new-session -n - /usr/bin/byobu-shell
+steve            pts/4    136.168.201.152  Thu15   18:16m  0.02s  0.02s -bash
+steve            pts/7    136.168.201.152  11Apr23 24:22m  0.35s  0.01s sshd: steve [priv]  
+steve            tty1     -                05Nov22 136days  0.11s  0.02s -bash
+xreyes           pts/42   136.168.201.2    09:04   16.00s  0.22s  0.08s vi xylab12.cpp
+zgarcia          pts/52   136.168.201.2    09:12   40.00s  0.06s  0.06s -bash
+zgarcia          pts/6    136.168.201.2    08:56   41.00s  0.59s  0.53s vi xylab12.cpp
