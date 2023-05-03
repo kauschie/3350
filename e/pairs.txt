@@ -1,0 +1,12 @@
+Michael Kausch
+Date: 5/3/2023
+CMPS 3350 - Software Engineering
+
+1. What did you learn from pair programming?
+
+I learned that not everybody has the same strengths as everybody else when it 
+comes to programming. Some people may excel in one area while others may excel
+in completely different areas. This is one of the advantages to pair programming;
+the strengths of each member of the pair are additive and together they are able
+to produce better code. There's always two pairs of eyes on the code which also
+leads to a reduced amount of bugs/errors.
